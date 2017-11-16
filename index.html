@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Bootstrap Year Calendar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css'>
+
+<link rel='stylesheet' href='css/bootstrap-year-calendar.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+
+
+</head>
+
+<body>
+  <div id="calendar">
+
+  </div>
+
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-year-calendar/1.1.1/js/bootstrap-year-calendar.min.js'></script>
+
+<script>
+
+$('#calendar').calendar({
+    mouseOnDay: function(e) {
+        if(e.events.length > 0) {
+            var content = '';
+
+            for(var i in e.events) {
+                content += '<div class="event-tooltip-content">'
+                                + '<div class="event-name" style="color:' + e.events[i].color + '">' + e.events[i].name + '</div>'
+                                + '<iframe src="http://localhost:8000/" width="500" height="1000" frameborder="0"></iframe>'
+                            + '</div>';
+            }
+
+            $(e.element).popover({
+                trigger: 'manual',
+                container: 'body',
+                html:true,
+                content: content
+            }).on("mouseenter", function () {
+                console.log("ENTER")
+                    var _this = this;
+                    $(this).popover("show");
+                    $(".popover").on("mouseleave", function () {
+                        $(_this).popover('hide');
+                    });
+                }).on("mouseleave", function () {
+                    console.log("LEAVEING")
+                    var _this = this;
+                    setTimeout(function () {
+                        if (!$(".popover:hover").length) {
+                            $(_this).popover("hide");
+                        }
+                    }, 10);
+            });
+
+            $(e.element).popover('show');
+        }
+    },
+    dayContextMenu: function(e) {
+        $(e.element).popover('hide');
+    },
+    dataSource: [
+        {
+            id: 0,
+            name: 'Google I/O',
+            location: 'San Francisco, CA',
+            startDate: new Date(2017, 4, 28),
+            endDate: new Date(2017, 4, 29),
+            color: "#8000ff"
+        },
+        {
+            id: 1,
+            name: 'Microsoft Convergence',
+            location: 'New Orleans, LA',
+            startDate: new Date(2017, 2, 16),
+            endDate: new Date(2017, 2, 19),
+            color: "#8000ff"
+        },
+        {
+            id: 2,
+            name: 'Microsoft Build Developer Conference',
+            location: 'San Francisco, CA',
+            startDate: new Date(2017, 3, 29),
+            endDate: new Date(2017, 4, 1),
+            color: "#8000ff"
+        },
+        {
+            id: 3,
+            name: 'Apple Special Event',
+            location: 'San Francisco, CA',
+            startDate: new Date(2016, 8, 1),
+            endDate: new Date(2016, 8, 1),
+            color: "#8000ff"
+        },
+        {
+            id: 4,
+            name: 'Apple Keynote',
+            location: 'San Francisco, CA',
+            startDate: new Date(2016, 8, 9),
+            endDate: new Date(2016, 8, 9),
+            color: "#8000ff"
+        },
+        {
+            id: 5,
+            name: 'Chrome Developer Summit',
+            location: 'Mountain View, CA',
+            startDate: new Date(2016, 10, 17),
+            endDate: new Date(2016, 10, 18)
+        },
+        {
+            id: 6,
+            name: 'F8 2015',
+            location: 'San Francisco, CA',
+            startDate: new Date(2018, 2, 25),
+            endDate: new Date(2018, 2, 26)
+        },
+        {
+            id: 7,
+            name: 'Yahoo Mobile Developer Conference',
+            location: 'New York',
+            startDate: new Date(2018, 7, 25),
+            endDate: new Date(2018, 7, 26)
+        },
+        {
+            id: 8,
+            name: 'Android Developer Conference',
+            location: 'Santa Clara, CA',
+            startDate: new Date(2018, 11, 1),
+            endDate: new Date(2018, 11, 4)
+        },
+        {
+            id: 9,
+            name: 'LA Tech Summit',
+            location: 'Los Angeles, CA',
+            startDate: new Date(2018, 10, 17),
+            endDate: new Date(2018, 10, 17)
+        }
+    ]
+});
+</script>
+</body>
+</html>
